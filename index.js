@@ -55,7 +55,9 @@ function addItems(type, desc, value){
     const collection = document.querySelector('.collection');
 
     collection.insertAdjacentHTML('afterbegin', newHtml);
-}
+
+    addItemToLS(type, desc, value, time);
+};
 
 
 function resetForm(){
@@ -63,5 +65,25 @@ function resetForm(){
    document.querySelector('.add__description').value = '';
    document.querySelector('.add__value').value = '';
 
-}
+};
 
+function getItemsFromLS(){
+    let items = localStorage.getItem('items');
+
+    if(items){
+        items = JSON.parse(items);
+    }else{
+        items = [];
+    }
+
+    return items;
+};
+
+function addItemToLS(type, desc, value, time){
+
+    let items = getItemsFromLS();
+
+    items.push({desc, time, type, value,});
+
+    localStorage.setItem('items', JSON.stringify(items));
+};
