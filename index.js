@@ -62,13 +62,30 @@ function showItem(){
 function addItems(type, desc, value){
 
     const time = getFormatedTime();
-    
+
+    const newHtml = `
+        <div class="collection">
+            <div class="item">
+              <div class="item-description-time"> 
+                <div class="item-description">
+                  <p>${desc}</p>
+                </div>
+                <div class="item-time">
+                  <p>${time}</p>
+                </div>
+              </div>
+              <div class="item-amount ${type === '+' ? 'income-amount' : 'expense-amount'} ">
+                <p>${type}Shs${value}</p>
+              </div>
+            </div>
+        </div>  
+        `;    
 
     const collection = document.querySelector('.collection');
     collection.insertAdjacentHTML('afterbegin', newHtml);
 
     addItemToLS(type, desc, value, time);
-};
+}
 
 
 function resetForm(){
@@ -88,7 +105,7 @@ function getItemsFromLS(){
     }
 
     return items;
-}; 
+}
 
 function addItemToLS(type, desc, value, time){
 
@@ -97,4 +114,4 @@ function addItemToLS(type, desc, value, time){
     items.push({desc, time, type, value,});
 
     localStorage.setItem('items', JSON.stringify(items));
-};
+}
