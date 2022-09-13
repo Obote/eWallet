@@ -1,3 +1,19 @@
+
+function getFormatedTime(){
+
+const now = new Date().toLocaleTimeString('en-us',{
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+});;
+
+const date = now.split(',')[0].split(' ');
+const time = now.split(',')[1];
+return `${date[1]} ${date[0]}, ${time}`;
+}
+
+
 document.querySelector('#ewallet-form').addEventListener('submit', function
 (e){
     e.preventDefault();
@@ -8,13 +24,16 @@ document.querySelector('#ewallet-form').addEventListener('submit', function
 
     if (desc.length > 0 && value.length > 0){
         addItems(type, desc, value);  
-        resetForm();
+        resetForm(); 
 
     }
     
 });
 
 function addItems(type, desc, value){
+
+    const time = getFormatedTime();
+
     const newHtml = `
     <div class="collection">
         <div class="item">
@@ -23,11 +42,11 @@ function addItems(type, desc, value){
               <p>${desc}</p>
             </div>
             <div class="item-time">
-              <p>13 Sep, 10:45 AM</p>
+              <p>${time}</p>
             </div>
           </div>
           <div class="item-amount ${type === '+' ? 'income-amount' : 'expense-amount'} ">
-            <p>${type}$${value}</p>
+            <p>${type}Shs${value}</p>
           </div>
         </div>
     </div>  
