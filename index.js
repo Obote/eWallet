@@ -6,8 +6,15 @@ document.querySelector('#ewallet-form').addEventListener('submit', function
     const desc = document.querySelector('.add__description').value;
     const value = document.querySelector('.add__value').value;
 
-    console.log(type, desc, value);
+    if (desc.length > 0 && value.length > 0){
+        addItems(type, desc, value);  
+        resetForm();
 
+    }
+    
+});
+
+function addItems(type, desc, value){
     const newHtml = `
     <div class="collection">
         <div class="item">
@@ -19,15 +26,23 @@ document.querySelector('#ewallet-form').addEventListener('submit', function
               <p>13 Sep, 10:45 AM</p>
             </div>
           </div>
-          <div class="item-amount expense-amount">
+          <div class="item-amount ${type === '+' ? 'income-amount' : 'expense-amount'} ">
             <p>${type}$${value}</p>
           </div>
         </div>
-    </div>
+    </div>  
     `;
 
     const collection = document.querySelector('.collection');
 
     collection.insertAdjacentHTML('afterbegin', newHtml);
-})
+}
+
+
+function resetForm(){
+   document.querySelector('.add__type').value = '+';
+   document.querySelector('.add__description').value = '';
+   document.querySelector('.add__value').value = '';
+
+}
 
