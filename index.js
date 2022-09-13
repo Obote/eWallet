@@ -49,7 +49,7 @@ function showItem(){
                 </div>
               </div>
               <div class="item-amount ${item.type === '+' ? 'income-amount' : 'expense-amount'} ">
-                <p>${item.type}Shs${item.value}</p>
+                <p>${item.type}Shs${separator(item.value)}</p>
               </div>
             </div>
         </div>  
@@ -75,7 +75,7 @@ function addItems(type, desc, value){
                 </div>
               </div>
               <div class="item-amount ${type === '+' ? 'income-amount' : 'expense-amount'} ">
-                <p>${type}Shs${value}</p>
+                <p>${type}Shs${separator(value)}</p>
               </div>
             </div>
         </div>  
@@ -133,7 +133,7 @@ function showTotalIncome(){
         }
 
     }
-    document.querySelector('.income__amount p').innerText = `Shs ${totalIncome}`;
+        document.querySelector('.income__amount p').innerText = `Shs ${separator(totalIncome)}`;
 }
 
 
@@ -149,7 +149,7 @@ function showTotalExpense(){
             totalExpense += parseInt(item.value);
         }
     }
-    document.querySelector('.expense__amount p').innerText = `Shs ${totalExpense}`;
+    document.querySelector('.expense__amount p').innerText = `Shs ${separator(totalExpense)}`;
 }
 
 
@@ -166,7 +166,7 @@ function showTotalBalance(){
             balance -= parseInt(item.value);
         }
     }
-    document.querySelector('.balance__amount p').innerText = `Shs ${balance}`;
+    document.querySelector('.balance__amount p').innerText = `Shs ${separator(balance)}`;
 
     if (balance >= 0){
         document.querySelector('header').className = 'green';
@@ -174,4 +174,9 @@ function showTotalBalance(){
         document.querySelector('header').className = 'red';
     }
 
+}
+
+function separator(amount){
+    amount = parseInt(amount);
+    return amount.toLocaleString();
 }
