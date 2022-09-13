@@ -25,35 +25,46 @@ document.querySelector('#ewallet-form').addEventListener('submit', function
     if (desc.length > 0 && value.length > 0){
         addItems(type, desc, value);  
         resetForm(); 
-
     }
     
 });
 
-function addItems(type, desc, value){
+showItem();
 
-    const time = getFormatedTime();
-
-    const newHtml = `
-    <div class="collection">
-        <div class="item">
-          <div class="item-description-time">
-            <div class="item-description">
-              <p>${desc}</p>
-            </div>
-            <div class="item-time">
-              <p>${time}</p>
-            </div>
-          </div>
-          <div class="item-amount ${type === '+' ? 'income-amount' : 'expense-amount'} ">
-            <p>${type}Shs${value}</p>
-          </div>
-        </div>
-    </div>  
-    `;
+function showItem(){
+    let items = getItemsFromLS();
 
     const collection = document.querySelector('.collection');
 
+    for ( let item of items){
+        const newHtml = `
+        <div class="collection">
+            <div class="item">
+              <div class="item-description-time"> 
+                <div class="item-description">
+                  <p>${item.desc}</p>
+                </div>
+                <div class="item-time">
+                  <p>${item.time}</p>
+                </div>
+              </div>
+              <div class="item-amount ${item.type === '+' ? 'income-amount' : 'expense-amount'} ">
+                <p>${item.type}Shs${item.value}</p>
+              </div>
+            </div>
+        </div>  
+        `;
+        collection.insertAdjacentHTML('afterbegin', newHtml);
+    }
+
+}
+
+function addItems(type, desc, value){
+
+    const time = getFormatedTime();
+    
+
+    const collection = document.querySelector('.collection');
     collection.insertAdjacentHTML('afterbegin', newHtml);
 
     addItemToLS(type, desc, value, time);
@@ -73,11 +84,11 @@ function getItemsFromLS(){
     if(items){
         items = JSON.parse(items);
     }else{
-        items = [];
+         items = [];
     }
 
     return items;
-};
+}; 
 
 function addItemToLS(type, desc, value, time){
 
