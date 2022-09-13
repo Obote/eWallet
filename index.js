@@ -85,9 +85,11 @@ function addItems(type, desc, value){
     collection.insertAdjacentHTML('afterbegin', newHtml);
 
     addItemToLS(type, desc, value, time);
-    
+
     showTotalIncome();
     showTotalExpense();
+    showTotalBalance();
+
 }
 
 
@@ -148,4 +150,28 @@ function showTotalExpense(){
         }
     }
     document.querySelector('.expense__amount p').innerText = `Shs ${totalExpense}`;
+}
+
+
+showTotalBalance();
+
+function showTotalBalance(){
+    let items = getItemsFromLS();
+    let balance = 0;
+
+    for (let item of items){
+        if(item.type === '+'){
+            balance += parseInt(item.value);
+        }else{
+            balance -= parseInt(item.value);
+        }
+    }
+    document.querySelector('.balance__amount p').innerText = `Shs ${balance}`;
+
+    if (balance >= 0){
+        document.querySelector('header').className = 'green';
+    }else{
+        document.querySelector('header').className = 'red';
+    }
+
 }
